@@ -79,10 +79,7 @@ class CoursesController extends ControllerBase {
     $courses = $this->umdApiClient->getCourses(30);
 
     // Display a message if mock mode is enabled.
-    if (method_exists($this->umdApiClient, 'isMockModeEnabled') && $this->umdApiClient->isMockModeEnabled()) {
-      \Drupal::messenger()->addStatus($this->t('Mock data is currently being used for course listings.'));
-    }
-    elseif (property_exists($this->umdApiClient, 'config') && $this->umdApiClient->config->get('mock_mode_enabled')) {
+    if ($this->umdApiClient->isMockModeEnabled()) {
       \Drupal::messenger()->addStatus($this->t('Mock data is currently being used for course listings.'));
     }
 

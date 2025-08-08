@@ -79,17 +79,16 @@ class UmdApiClient {
    *   The time service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The configuration factory.
-   * @param \Drupal\Core\Extension\ModuleExtensionList|null $extension_list_module
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
    *   The extension list module service.
    */
-  public function __construct(ClientInterface $http_client, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, TimeInterface $time, ConfigFactoryInterface $config_factory, $extension_list_module = NULL) {
+  public function __construct(ClientInterface $http_client, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, TimeInterface $time, ConfigFactoryInterface $config_factory, $extension_list_module) {
     $this->httpClient = $http_client;
     $this->cache = $cache;
     $this->loggerFactory = $logger_factory;
     $this->time = $time;
     $this->config = $config_factory->get('umd_courses.settings');
-    // Inject the extension.list.module service if provided, otherwise fallback to \Drupal::service for BC.
-    $this->extensionListModule = $extension_list_module ?: \Drupal::service('extension.list.module');
+    $this->extensionListModule = $extension_list_module;
   }
 
   /**
@@ -208,6 +207,19 @@ class UmdApiClient {
       ]);
       return NULL;
     }
+  }
+
+  /**
+   * Checks if mock mode is enabled in the module configuration.
+   *
+   * When mock mode is enabled, the service will use local fixture data
+   * instead of making real API requests to the UMD API.
+   *
+   * @return bool
+   *   TRUE if mock mode is enabled, FALSE otherwise.
+   */
+  public function isMockModeEnabled() {
+    return $this->config->get('mock_mode_enabled');
   }
 
 }
