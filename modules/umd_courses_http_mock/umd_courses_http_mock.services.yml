@@ -1,0 +1,6 @@
+# umd_courses_http_mock.services.yml
+services:
+  umd_courses_http_mock.client:
+    class: Drupal\umd_courses_http_mock\Service\MockClient
+    decorates: http_client
+    arguments: ['@umd_courses_http_mock.client.inner', '@extension.list.module']
