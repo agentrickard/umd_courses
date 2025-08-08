@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\umd_courses\Unit;
 
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\umd_courses\Controller\CoursesController;
 use Drupal\umd_courses\Service\UmdApiClient;
@@ -50,8 +52,8 @@ class CoursesControllerTest extends UnitTestCase {
     parent::setUp();
 
     $this->umdApiClient = $this->createMock(UmdApiClient::class);
-    $this->moduleHandler = $this->createMock(\Drupal\Core\Extension\ModuleHandlerInterface::class);
-    $this->messenger = $this->createMock(\Drupal\Core\Messenger\MessengerInterface::class);
+    $this->moduleHandler = $this->createMock(ModuleHandlerInterface::class);
+    $this->messenger = $this->createMock(MessengerInterface::class);
     $this->controller = new CoursesController($this->umdApiClient, $this->moduleHandler, $this->messenger);
   }
 
