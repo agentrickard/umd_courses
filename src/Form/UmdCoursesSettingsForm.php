@@ -49,6 +49,7 @@ class UmdCoursesSettingsForm extends ConfigFormBase {
       ->save();
 
     parent::submitForm($form, $form_state);
+    drupal_flush_all_caches();
   }
 
 }

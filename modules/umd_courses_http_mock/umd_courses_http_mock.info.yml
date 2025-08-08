@@ -3,6 +3,6 @@ name: 'UMD Courses HTTP Mock'
 type: module
 description: 'Mocks HTTP client calls to the UMD API for development and testing purposes.'
 core_version_requirement: ^10 || ^11
-package: Development
+package: GovCon
 dependencies:
   - umd_courses:umd_courses

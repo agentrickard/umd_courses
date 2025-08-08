@@ -3,6 +3,6 @@ name: 'UMD Courses Mock'
 type: module
 description: 'Overrides UmdApiClient service to use mock data for testing.'
 core_version_requirement: ^10 || ^11
-package: Development
+package: GovCon
 dependencies:
   - umd_courses:umd_courses

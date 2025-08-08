@@ -2,6 +2,6 @@ name: 'UMD Courses'
 type: module
 description: 'Fetches and displays course data from the UMD API'
 core_version_requirement: ^10 || ^11
-package: Custom
+package: GovCon
 dependencies:
   - drupal:system
