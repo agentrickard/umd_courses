@@ -11,7 +11,7 @@
 <div class="umd-courses-page">
   <div class="courses-header">
     <div class="header-content">
-      <h1>{{ 'University of Maryland Courses'|t }}</h1>
+      <h2>{{ 'University of Maryland Courses'|t }}</h2>
       {% if courses %}
         <p class="courses-found">{{ 'Found @count courses'|t({'@count': courses|length}) }}</p>
       {% endif %}
@@ -23,7 +23,7 @@
       {% for course in courses %}
         <div class="course-item">
           <div class="course-header">
-            <h2 class="course-title">{{ course.name }}</h2>
+            <h3 class="course-title">{{ course.name }}</h3>
             <div class="course-id-badge">{{ course.course_id }}</div>
           </div>
           

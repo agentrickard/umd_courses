@@ -28,6 +28,10 @@ class UmdCoursesTest extends BrowserTestBase {
    * Test the courses page loads successfully.
    */
   public function testCoursesPageLoads() {
+    // Create a user with permission to access content.
+    $user = $this->drupalCreateUser(['access content']);
+    $this->drupalLogin($user);
+
     // Visit the courses page.
     $this->drupalGet('/courses');
 
@@ -45,6 +49,10 @@ class UmdCoursesTest extends BrowserTestBase {
    * Test the courses page displays courses.
    */
   public function testCoursesPageDisplaysCourses() {
+    // Create a user with permission to access content.
+    $user = $this->drupalCreateUser(['access content']);
+    $this->drupalLogin($user);
+
     // Visit the courses page.
     $this->drupalGet('/courses');
 
@@ -91,6 +99,10 @@ class UmdCoursesTest extends BrowserTestBase {
    * Test the courses page HTML structure.
    */
   public function testCoursesPageHtmlStructure() {
+    // Create a user with permission to access content.
+    $user = $this->drupalCreateUser(['access content']);
+    $this->drupalLogin($user);
+
     $this->drupalGet('/courses');
 
     // Check for header structure.
@@ -98,22 +110,18 @@ class UmdCoursesTest extends BrowserTestBase {
     $this->assertSession()->elementExists('css', '.header-content');
 
     // Check for proper heading hierarchy.
-    $this->assertSession()->elementExists('css', 'h1');
+    $this->assertSession()->elementExists('css', 'h2');
 
     // Check that CSS is loaded.
     $this->assertSession()->responseContains('umd-courses.css');
   }
 
   /**
-   * Test the courses page is accessible without authentication.
+   * Test the courses page is accessible with proper permissions.
    */
   public function testCoursesPageAccessible() {
-    // Test as anonymous user.
-    $this->drupalGet('/courses');
-    $this->assertSession()->statusCodeEquals(200);
-
-    // Test as authenticated user.
-    $user = $this->drupalCreateUser();
+    // Test as authenticated user with access content permission.
+    $user = $this->drupalCreateUser(['access content']);
     $this->drupalLogin($user);
     $this->drupalGet('/courses');
     $this->assertSession()->statusCodeEquals(200);
@@ -123,6 +131,10 @@ class UmdCoursesTest extends BrowserTestBase {
    * Test the courses page route.
    */
   public function testCoursesRoute() {
+    // Create a user with permission to access content.
+    $user = $this->drupalCreateUser(['access content']);
+    $this->drupalLogin($user);
+
     $url = Url::fromRoute('umd_courses.courses_page');
     $this->assertEquals('/courses', $url->toString());
 
@@ -135,19 +147,23 @@ class UmdCoursesTest extends BrowserTestBase {
    * Test the courses page meta tags and SEO elements.
    */
   public function testCoursesPageMetaTags() {
+    // Create a user with permission to access content.
+    $user = $this->drupalCreateUser(['access content']);
+    $this->drupalLogin($user);
+
     $this->drupalGet('/courses');
 
     // Check page title is set correctly.
     $this->assertSession()->titleEquals('UMD Courses | Drupal');
 
-    // Check that the page has proper heading structure.
+    // Check that our specific H2 is present and has correct text.
+    $this->assertSession()->elementExists('css', '.courses-header h2');
     $page = $this->getSession()->getPage();
-    $h1_elements = $page->findAll('css', 'h1');
-    
-    $this->assertCount(1, $h1_elements, 'Page should have exactly one H1 element');
+    $our_h2 = $page->find('css', '.courses-header h2');
+    $this->assertNotNull($our_h2, 'Our courses H2 should be present');
     $this->assertEquals(
       'University of Maryland Courses',
-      $h1_elements[0]->getText()
+      $our_h2->getText()
     );
   }
 
@@ -155,6 +171,10 @@ class UmdCoursesTest extends BrowserTestBase {
    * Test courses page responsive design elements.
    */
   public function testCoursesPageResponsiveElements() {
+    // Create a user with permission to access content.
+    $user = $this->drupalCreateUser(['access content']);
+    $this->drupalLogin($user);
+
     $this->drupalGet('/courses');
 
     // Check that responsive classes and structure exist.

@@ -11,7 +11,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
-use Psr7\Http\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Unit tests for UmdApiClient service.

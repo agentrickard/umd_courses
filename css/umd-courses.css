@@ -19,7 +19,7 @@
   text-align: center;
 }
 
-.courses-header h1 {
+.courses-header h2 {
   font-size: 2.5rem;
   font-weight: 700;
   color: white;
@@ -38,7 +38,7 @@
 .courses-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0px;
+  gap: 30px;
   padding: 0 40px;
 }
 
@@ -163,7 +163,7 @@
     font-size: 1.3rem;
   }
 
-  .courses-header h1 {
+  .courses-header h2 {
     font-size: 1.75rem;
   }
 
