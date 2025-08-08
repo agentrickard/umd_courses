@@ -72,21 +72,21 @@ class UmdCoursesTest extends BrowserTestBase {
     if ($courses_list !== NULL) {
       // Check for course cards.
       $course_items = $this->getSession()->getPage()->findAll('css', '.course-item');
-      
+
       if (!empty($course_items)) {
         // Verify course card structure.
         $first_course = $course_items[0];
-        
+
         $this->assertNotNull(
           $first_course->find('css', '.course-title'),
           'Course title should be present'
         );
-        
+
         $this->assertNotNull(
           $first_course->find('css', '.course-id-badge'),
           'Course ID badge should be present'
         );
-        
+
         $this->assertNotNull(
           $first_course->find('css', '.course-divider'),
           'Course divider should be present'
@@ -182,7 +182,7 @@ class UmdCoursesTest extends BrowserTestBase {
 
     // Verify that course items have proper structure for responsive design.
     $course_items = $this->getSession()->getPage()->findAll('css', '.course-item');
-    
+
     if (!empty($course_items)) {
       foreach ($course_items as $item) {
         $this->assertNotNull(

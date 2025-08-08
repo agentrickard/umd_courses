@@ -226,10 +226,10 @@ class CoursesControllerTest extends UnitTestCase {
 
     // Check complex array processing.
     $this->assertEquals('Regular, Nested1, Nested2, Pass-Fail', $courses[0]['grading_method']);
-    
+
     // Check that strings remain unchanged.
     $this->assertEquals('Already a string', $courses[0]['gen_ed']);
-    
+
     // Check that NULL sections field is preserved.
     $this->assertNull($courses[0]['sections']);
   }
@@ -243,11 +243,16 @@ class CoursesControllerTest extends UnitTestCase {
     $mockCourses = [
       [
         'course_id' => 'TEST100',
-        'grading_method' => 'String grading method',  // Not an array.
-        'gen_ed' => ['DSHU', 'DVUP'],  // Array.
-        'core' => 'String core',  // Not an array.
-        'sections' => ['SEC1', 'SEC2'],  // Array.
-        'other_field' => ['Not processed'],  // Should remain as array.
+    // Not an array.
+        'grading_method' => 'String grading method',
+    // Array.
+        'gen_ed' => ['DSHU', 'DVUP'],
+    // Not an array.
+        'core' => 'String core',
+    // Array.
+        'sections' => ['SEC1', 'SEC2'],
+    // Should remain as array.
+        'other_field' => ['Not processed'],
       ],
     ];
 

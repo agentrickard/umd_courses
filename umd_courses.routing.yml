@@ -5,3 +5,11 @@ umd_courses.courses_page:
     _title: 'UMD Courses'
   requirements:
     _permission: 'access content'
+
+umd_courses.settings_form:
+  path: '/admin/config/settings/umd-courses'
+  defaults:
+    _form: '\Drupal\umd_courses\Form\UmdCoursesSettingsForm'
+    _title: 'UMD Courses Settings'
+  requirements:
+    _permission: 'administer site configuration'

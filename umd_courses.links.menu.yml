@@ -1,0 +1,6 @@
+umd_courses.settings_form:
+  title: 'UMD Courses Settings'
+  description: 'Configure the settings for the UMD Courses module.'
+  parent: system.admin_config_services
+  route_name: umd_courses.settings_form
+  weight: 10

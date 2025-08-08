@@ -1,0 +1,4 @@
+# umd_courses.settings.yml
+# Configuration settings for the UMD Courses module.
+
+mock_mode_enabled: false

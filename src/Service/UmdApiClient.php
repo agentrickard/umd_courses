@@ -7,6 +7,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Component\Datetime\TimeInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
  * Service for fetching course data from the UMD API.
@@ -42,6 +43,20 @@ class UmdApiClient {
   protected $time;
 
   /**
+   * The configuration object.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
+
+  /**
+   * The extension list module service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $extensionListModule;
+
+  /**
    * The UMD API base URL.
    */
   const API_BASE_URL = 'https://api.umd.io/v1';
@@ -62,12 +77,19 @@ class UmdApiClient {
    *   The logger factory.
    * @param \Drupal\Component\Datetime\TimeInterface $time
    *   The time service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory.
+   * @param \Drupal\Core\Extension\ModuleExtensionList|null $extension_list_module
+   *   The extension list module service.
    */
-  public function __construct(ClientInterface $http_client, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, TimeInterface $time) {
+  public function __construct(ClientInterface $http_client, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, TimeInterface $time, ConfigFactoryInterface $config_factory, $extension_list_module = NULL) {
     $this->httpClient = $http_client;
     $this->cache = $cache;
     $this->loggerFactory = $logger_factory;
     $this->time = $time;
+    $this->config = $config_factory->get('umd_courses.settings');
+    // Inject the extension.list.module service if provided, otherwise fallback to \Drupal::service for BC.
+    $this->extensionListModule = $extension_list_module ?: \Drupal::service('extension.list.module');
   }
 
   /**
@@ -80,8 +102,24 @@ class UmdApiClient {
    *   An array of course data.
    */
   public function getCourses($limit = 50) {
+    // Check for a configuration setting to enable mock mode.
+    if ($this->config->get('mock_mode_enabled')) {
+      // Use the injected extension.list.module service to get the module path.
+      $module_path = $this->extensionListModule->getPath('umd_courses');
+      $fixture_path = DRUPAL_ROOT . '/' . $module_path . '/fixtures/courses_api_response.json';
+
+      if (file_exists($fixture_path)) {
+        $json_data = file_get_contents($fixture_path);
+        return json_decode($json_data, TRUE);
+      }
+      else {
+        $this->loggerFactory->get('umd_courses')->warning('Fixture file not found: @path', ['@path' => $fixture_path]);
+        return [];
+      }
+    }
+
     $cache_key = 'umd_courses:courses:' . $limit;
-    
+
     // Try to get data from cache first.
     if ($cache = $this->cache->get($cache_key)) {
       return $cache->data;
@@ -96,14 +134,14 @@ class UmdApiClient {
       ]);
 
       $data = json_decode($response->getBody()->getContents(), TRUE);
-      
+
       if (json_last_error() !== JSON_ERROR_NONE) {
         throw new \Exception('Invalid JSON response from UMD API');
       }
 
       // Cache the data for 1 hour.
       $this->cache->set($cache_key, $data, $this->time->getRequestTime() + self::CACHE_EXPIRE);
-      
+
       return $data;
     }
     catch (RequestException $e) {
@@ -130,8 +168,11 @@ class UmdApiClient {
    *   The course data or NULL if not found.
    */
   public function getCourse($course_id) {
+    // The getCourse method is not affected by mock mode in this example,
+    // as we're only mocking the list of courses. We could extend this logic
+    // to include a fixture for single courses if needed.
     $cache_key = 'umd_courses:course:' . $course_id;
-    
+
     // Try to get data from cache first.
     if ($cache = $this->cache->get($cache_key)) {
       return $cache->data;
@@ -143,14 +184,14 @@ class UmdApiClient {
       ]);
 
       $data = json_decode($response->getBody()->getContents(), TRUE);
-      
+
       if (json_last_error() !== JSON_ERROR_NONE) {
         throw new \Exception('Invalid JSON response from UMD API');
       }
 
       // Cache the data for 1 hour.
       $this->cache->set($cache_key, $data, $this->time->getRequestTime() + self::CACHE_EXPIRE);
-      
+
       return $data;
     }
     catch (RequestException $e) {
