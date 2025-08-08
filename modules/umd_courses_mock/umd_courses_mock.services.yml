@@ -1,0 +1,6 @@
+# umd_courses_mock.services.yml
+services:
+  umd_courses.api_client.mock:
+    class: Drupal\umd_courses_mock\Service\MockUmdApiClient
+    decorates: umd_courses.api_client
+    arguments: ['@umd_courses.api_client.mock.inner', '@config.factory', '@extension.list.module']

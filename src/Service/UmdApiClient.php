@@ -167,12 +167,33 @@ class UmdApiClient {
    *   The course data or NULL if not found.
    */
   public function getCourse($course_id) {
-    // The getCourse method is not affected by mock mode in this example,
-    // as we're only mocking the list of courses. We could extend this logic
-    // to include a fixture for single courses if needed.
-    $cache_key = 'umd_courses:course:' . $course_id;
+    if ($this->isMockModeEnabled()) {
+      $module_path = $this->extensionListModule->getPath('umd_courses');
+      $fixture_path = DRUPAL_ROOT . '/' . $module_path . '/fixtures/courses_api_response.json';
 
-    // Try to get data from cache first.
+      if (file_exists($fixture_path)) {
+        $json_data = file_get_contents($fixture_path);
+        $courses = json_decode($json_data, TRUE);
+        if (is_array($courses)) {
+          foreach ($courses as $course) {
+            if (isset($course['course_id']) && $course['course_id'] == $course_id) {
+              return $course;
+            }
+          }
+        }
+        $this->loggerFactory->get('umd_courses')->warning('Course @course_id not found in fixture file.', [
+          '@course_id' => $course_id,
+        ]);
+        return NULL;
+      }
+      else {
+        $this->loggerFactory->get('umd_courses')->warning('Fixture file not found: @path', ['@path' => $fixture_path]);
+        return NULL;
+      }
+    }
+
+    // Original API/caching logic follows...
+    $cache_key = 'umd_courses:course:' . $course_id;
     if ($cache = $this->cache->get($cache_key)) {
       return $cache->data;
     }
@@ -181,16 +202,11 @@ class UmdApiClient {
       $response = $this->httpClient->request('GET', self::API_BASE_URL . '/courses/' . $course_id, [
         'timeout' => 30,
       ]);
-
       $data = json_decode($response->getBody()->getContents(), TRUE);
-
       if (json_last_error() !== JSON_ERROR_NONE) {
         throw new \Exception('Invalid JSON response from UMD API');
       }
-
-      // Cache the data for 1 hour.
       $this->cache->set($cache_key, $data, $this->time->getRequestTime() + self::CACHE_EXPIRE);
-
       return $data;
     }
     catch (RequestException $e) {

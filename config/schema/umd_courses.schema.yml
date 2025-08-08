@@ -1,0 +1,8 @@
+umd_courses.settings:
+  type: config_object
+  label: 'UMD Courses settings'
+  mapping:
+    mock_mode_enabled:
+      type: boolean
+      label: 'Enable mock mode'
+      description: 'If enabled, the module will use local fixture data instead of calling the UMD API.'

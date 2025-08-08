@@ -2,6 +2,9 @@
 
 namespace Drupal\Tests\umd_courses\Unit;
 
+use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\umd_courses\Service\UmdApiClient;
 use Drupal\Core\Cache\CacheBackendInterface;
@@ -57,6 +60,27 @@ class UmdApiClientTest extends UnitTestCase {
   protected $time;
 
   /**
+   * The mocked config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $configFactory;
+
+  /**
+   * The mocked config object.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $config;
+
+  /**
+   * The mocked extension list module service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $extensionListModule;
+
+  /**
    * The UmdApiClient service under test.
    *
    * @var \Drupal\umd_courses\Service\UmdApiClient
@@ -74,6 +98,9 @@ class UmdApiClientTest extends UnitTestCase {
     $this->loggerFactory = $this->createMock(LoggerChannelFactoryInterface::class);
     $this->logger = $this->createMock(LoggerChannelInterface::class);
     $this->time = $this->createMock(TimeInterface::class);
+    $this->configFactory = $this->createMock(ConfigFactoryInterface::class);
+    $this->config = $this->createMock(ImmutableConfig::class);
+    $this->extensionListModule = $this->createMock(ModuleExtensionList::class);
 
     $this->loggerFactory->method('get')
       ->with('umd_courses')
@@ -82,11 +109,17 @@ class UmdApiClientTest extends UnitTestCase {
     $this->time->method('getRequestTime')
       ->willReturn(1234567890);
 
+    $this->configFactory->method('get')
+      ->with('umd_courses.settings')
+      ->willReturn($this->config);
+
     $this->apiClient = new UmdApiClient(
       $this->httpClient,
       $this->cache,
       $this->loggerFactory,
-      $this->time
+      $this->time,
+      $this->configFactory,
+      $this->extensionListModule
     );
   }
 
