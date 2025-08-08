@@ -1,0 +1,5 @@
+courses_page:
+  version: 1.x
+  css:
+    theme:
+      css/umd-courses.css: {}

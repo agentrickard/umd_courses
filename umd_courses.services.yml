@@ -1,0 +1,4 @@
+services:
+  umd_courses.api_client:
+    class: Drupal\umd_courses\Service\UmdApiClient
+    arguments: ['@http_client', '@cache.default', '@logger.factory', '@datetime.time']

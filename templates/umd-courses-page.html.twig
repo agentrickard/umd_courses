@@ -1,0 +1,65 @@
+{#
+/**
+ * @file
+ * Template for displaying UMD courses page.
+ *
+ * Available variables:
+ * - courses: Array of course data from the UMD API.
+ */
+#}
+
+<div class="umd-courses-page">
+  <div class="courses-header">
+    <div class="header-content">
+      <h1>{{ 'University of Maryland Courses'|t }}</h1>
+      {% if courses %}
+        <p class="courses-found">{{ 'Found @count courses'|t({'@count': courses|length}) }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if courses %}
+    <div class="courses-list">
+      {% for course in courses %}
+        <div class="course-item">
+          <div class="course-header">
+            <h2 class="course-title">{{ course.name }}</h2>
+            <div class="course-id-badge">{{ course.course_id }}</div>
+          </div>
+          
+          <div class="course-divider"></div>
+          
+          <div class="course-meta">
+            {% if course.department %}
+              <div class="meta-item">
+                <strong>{{ 'Department:'|t }}</strong> {{ course.department }}
+              </div>
+            {% endif %}
+            
+            {% if course.credits %}
+              <div class="meta-item">
+                <strong>{{ 'Credits:'|t }}</strong> {{ course.credits }}
+              </div>
+            {% endif %}
+            
+            {% if course.semester %}
+              <div class="meta-item">
+                <strong>{{ 'Semester:'|t }}</strong> {{ course.semester }}
+              </div>
+            {% endif %}
+          </div>
+          
+          {% if course.description %}
+            <div class="course-description">
+              <strong>{{ 'Description:'|t }}</strong> {{ course.description|striptags }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="no-courses">
+      <p>{{ 'No courses are currently available. Please try again later.'|t }}</p>
+    </div>
+  {% endif %}
+</div>

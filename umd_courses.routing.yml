@@ -1,0 +1,7 @@
+umd_courses.courses_page:
+  path: '/courses'
+  defaults:
+    _controller: '\Drupal\umd_courses\Controller\CoursesController::coursesPage'
+    _title: 'UMD Courses'
+  requirements:
+    _permission: 'access content'

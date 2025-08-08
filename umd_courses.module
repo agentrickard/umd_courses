@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Contains umd_courses.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function umd_courses_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the umd_courses module.
+    case 'help.page.umd_courses':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The UMD Courses module fetches and displays course data from the University of Maryland API.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function umd_courses_theme() {
+  return [
+    'umd_courses_page' => [
+      'variables' => [
+        'courses' => [],
+      ],
+      'template' => 'umd-courses-page',
+    ],
+  ];
+}
