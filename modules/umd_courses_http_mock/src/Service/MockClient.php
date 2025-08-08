@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\umd_courses_http_mock;
+namespace Drupal\umd_courses_http_mock\Service;
 
 use Drupal\Core\Extension\ModuleExtensionList;
 use GuzzleHttp\ClientInterface;

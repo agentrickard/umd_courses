@@ -19,13 +19,33 @@ class CoursesController extends ControllerBase {
   protected $umdApiClient;
 
   /**
+   * The module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
+   * The messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Constructs a new CoursesController object.
    *
    * @param \Drupal\umd_courses\Service\UmdApiClient $umd_api_client
    *   The UMD API client service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler service.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger service.
    */
-  public function __construct(UmdApiClient $umd_api_client) {
+  public function __construct(UmdApiClient $umd_api_client, $module_handler, $messenger) {
     $this->umdApiClient = $umd_api_client;
+    $this->moduleHandler = $module_handler;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -33,40 +53,10 @@ class CoursesController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('umd_courses.api_client')
+      $container->get('umd_courses.api_client'),
+      $container->get('module_handler'),
+      $container->get('messenger'),
     );
-  }
-
-  /**
-   * Helper function to safely convert array values to strings.
-   *
-   * @param array $array
-   *   The array to process.
-   *
-   * @return string
-   *   A comma-separated string of the array values.
-   */
-  private function arrayToString($array) {
-    if (!is_array($array)) {
-      return (string) $array;
-    }
-
-    $strings = [];
-    foreach ($array as $value) {
-      if (is_scalar($value) || $value === NULL) {
-        $strings[] = (string) $value;
-      }
-      elseif (is_array($value)) {
-        // Handle nested arrays recursively.
-        $strings[] = $this->arrayToString($value);
-      }
-      else {
-        // For objects or other complex types, try to convert to string.
-        $strings[] = 'Complex Value';
-      }
-    }
-
-    return implode(', ', array_filter($strings));
   }
 
   /**
@@ -79,38 +69,19 @@ class CoursesController extends ControllerBase {
     $courses = $this->umdApiClient->getCourses(30);
 
     // Display a message if mock mode is enabled.
-    if ($this->umdApiClient->isMockModeEnabled()) {
-      \Drupal::messenger()->addStatus($this->t('Mock data is currently being used for course listings.'));
+    if ($this->moduleHandler->moduleExists('umd_courses_mock')) {
+      $this->messenger->addStatus($this->t('Mock service: Mock data is currently being used for course listings.'));
     }
-
-    // Process courses to handle array fields properly.
-    $processed_courses = [];
-    foreach ($courses as $course) {
-      $processed_course = $course;
-
-      // Convert array fields to strings to avoid Twig join issues.
-      if (isset($course['grading_method']) && is_array($course['grading_method'])) {
-        $processed_course['grading_method'] = $this->arrayToString($course['grading_method']);
-      }
-
-      if (isset($course['gen_ed']) && is_array($course['gen_ed'])) {
-        $processed_course['gen_ed'] = $this->arrayToString($course['gen_ed']);
-      }
-
-      if (isset($course['core']) && is_array($course['core'])) {
-        $processed_course['core'] = $this->arrayToString($course['core']);
-      }
-
-      if (isset($course['sections']) && is_array($course['sections'])) {
-        $processed_course['sections'] = $this->arrayToString($course['sections']);
-      }
-
-      $processed_courses[] = $processed_course;
+    elseif ($this->umdApiClient->isMockModeEnabled()) {
+      $this->messenger->addStatus($this->t('Mock mode: Mock data is currently being used for course listings.'));
+    }
+    elseif ($this->moduleHandler->moduleExists('umd_courses_http_mock')) {
+      $this->messenger->addStatus($this->t('Mock HTTP: Mock data is currently being used for course listings.'));
     }
 
     $build = [
       '#theme' => 'umd_courses_page',
-      '#courses' => $processed_courses,
+      '#courses' => $courses,
       '#attached' => [
         'library' => [
           'umd_courses/courses_page',
