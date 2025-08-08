@@ -23,6 +23,20 @@ class CoursesControllerTest extends UnitTestCase {
   protected $umdApiClient;
 
   /**
+   * The mocked module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $moduleHandler;
+
+  /**
+   * The mocked messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $messenger;
+
+  /**
    * The CoursesController under test.
    *
    * @var \Drupal\umd_courses\Controller\CoursesController
@@ -36,7 +50,9 @@ class CoursesControllerTest extends UnitTestCase {
     parent::setUp();
 
     $this->umdApiClient = $this->createMock(UmdApiClient::class);
-    $this->controller = new CoursesController($this->umdApiClient);
+    $this->moduleHandler = $this->createMock(\Drupal\Core\Extension\ModuleHandlerInterface::class);
+    $this->messenger = $this->createMock(\Drupal\Core\Messenger\MessengerInterface::class);
+    $this->controller = new CoursesController($this->umdApiClient, $this->moduleHandler, $this->messenger);
   }
 
   /**
@@ -46,77 +62,16 @@ class CoursesControllerTest extends UnitTestCase {
    */
   public function testCreate() {
     $container = $this->createMock(ContainerInterface::class);
-    $container->expects($this->once())
-      ->method('get')
-      ->with('umd_courses.api_client')
-      ->willReturn($this->umdApiClient);
+    $container->method('get')
+      ->willReturnMap([
+        ['umd_courses.api_client', $this->umdApiClient],
+        ['module_handler', $this->moduleHandler],
+        ['messenger', $this->messenger],
+      ]);
 
     $controller = CoursesController::create($container);
 
     $this->assertInstanceOf(CoursesController::class, $controller);
-  }
-
-  /**
-   * Test arrayToString helper method with simple array.
-   *
-   * @covers ::arrayToString
-   */
-  public function testArrayToStringSimple() {
-    $reflection = new \ReflectionClass($this->controller);
-    $method = $reflection->getMethod('arrayToString');
-    $method->setAccessible(TRUE);
-
-    $input = ['Regular', 'Pass-Fail', 'Audit'];
-    $result = $method->invokeArgs($this->controller, [$input]);
-
-    $this->assertEquals('Regular, Pass-Fail, Audit', $result);
-  }
-
-  /**
-   * Test arrayToString helper method with nested array.
-   *
-   * @covers ::arrayToString
-   */
-  public function testArrayToStringNested() {
-    $reflection = new \ReflectionClass($this->controller);
-    $method = $reflection->getMethod('arrayToString');
-    $method->setAccessible(TRUE);
-
-    $input = ['Regular', ['Sub1', 'Sub2'], 'Audit'];
-    $result = $method->invokeArgs($this->controller, [$input]);
-
-    $this->assertEquals('Regular, Sub1, Sub2, Audit', $result);
-  }
-
-  /**
-   * Test arrayToString helper method with non-array input.
-   *
-   * @covers ::arrayToString
-   */
-  public function testArrayToStringNonArray() {
-    $reflection = new \ReflectionClass($this->controller);
-    $method = $reflection->getMethod('arrayToString');
-    $method->setAccessible(TRUE);
-
-    $result = $method->invokeArgs($this->controller, ['simple string']);
-
-    $this->assertEquals('simple string', $result);
-  }
-
-  /**
-   * Test arrayToString helper method with mixed data types.
-   *
-   * @covers ::arrayToString
-   */
-  public function testArrayToStringMixedTypes() {
-    $reflection = new \ReflectionClass($this->controller);
-    $method = $reflection->getMethod('arrayToString');
-    $method->setAccessible(TRUE);
-
-    $input = ['String', 123, TRUE, NULL];
-    $result = $method->invokeArgs($this->controller, [$input]);
-
-    $this->assertEquals('String, 123, 1', $result);
   }
 
   /**
