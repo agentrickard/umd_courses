@@ -1,0 +1,222 @@
+[
+  {
+    "course_id": "AAAS100",
+    "semester": "202508",
+    "name": "Introduction to African American and Africana Studies",
+    "dept_id": "AAAS",
+    "department": "African American and Africana Studies",
+    "credits": "3",
+    "description": "Significant aspects of the history of African Americans with particular emphasis on the evolution and development of black communities from slavery to the present. Interdisciplinary introduction to social, political, legal and economic roots of contemporary problems faced by blacks in the United States with applications to the lives of other racial and ethnic minorities in the Americas and in other societies.",
+    "grading_method": ["Regular", "Pass-Fail", "Audit"],
+    "gen_ed": ["DSHU", "DVUP"],
+    "core": ["SH"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": null,
+      "formerly": null,
+      "restrictions": null,
+      "additional_info": null,
+      "also_offered_as": null,
+      "credit_granted_for": null
+    },
+    "sections": ["AAAS100-0101", "AAAS100-0201", "AAAS100-0301"]
+  },
+  {
+    "course_id": "AAAS101",
+    "semester": "202508",
+    "name": "Public Policy and the Black Community",
+    "dept_id": "AAAS",
+    "department": "African American and Africana Studies",
+    "credits": "3",
+    "description": "The impact of public policies on the Black community and the role of the policy process in affecting the social, economic and political well-being of minorities. Particular attention given to the post-civil rights era.",
+    "grading_method": ["Regular", "Pass-Fail", "Audit"],
+    "gen_ed": ["DSSP"],
+    "core": ["SH"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": null,
+      "formerly": null,
+      "restrictions": null,
+      "additional_info": null,
+      "also_offered_as": null,
+      "credit_granted_for": null
+    },
+    "sections": ["AAAS101-0101"]
+  },
+  {
+    "course_id": "AAAS187",
+    "semester": "202508",
+    "name": "The New Jim Crow: African-Americans, Mass Incarceration and the Prison Industrial Complex",
+    "dept_id": "AAAS",
+    "department": "African American and Africana Studies",
+    "credits": "3",
+    "description": "Students will examine the birth of the racial caste system following the abolition of slavery, the parallels between the racial hierarchy of the Jim Crow system and contemporary mass incarceration, and the expansion of the carceral state.",
+    "grading_method": ["Regular", "Pass-Fail", "Audit"],
+    "gen_ed": ["DSSP", "DVUP"],
+    "core": ["SH"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": null,
+      "formerly": null,
+      "restrictions": null,
+      "additional_info": "Cross-listed with CRIM187.",
+      "also_offered_as": ["CRIM187"],
+      "credit_granted_for": "AAAS187 or CRIM187."
+    },
+    "sections": ["AAAS187-0101"]
+  },
+  {
+    "course_id": "CMSC100",
+    "semester": "202508",
+    "name": "Bits and Bytes of Computer and Information Sciences",
+    "dept_id": "CMSC",
+    "department": "Computer Science",
+    "credits": "1",
+    "description": "An introduction to computer and information sciences. Fundamental concepts in computer science and information systems will be introduced. No programming background required.",
+    "grading_method": ["Regular"],
+    "gen_ed": ["SCIS"],
+    "core": ["NS"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": null,
+      "formerly": null,
+      "restrictions": "Not for Computer Science majors.",
+      "additional_info": null,
+      "also_offered_as": null,
+      "credit_granted_for": null
+    },
+    "sections": ["CMSC100-0101", "CMSC100-0102", "CMSC100-0103"]
+  },
+  {
+    "course_id": "CMSC131",
+    "semester": "202508",
+    "name": "Object-Oriented Programming I",
+    "dept_id": "CMSC",
+    "department": "Computer Science",
+    "credits": "4",
+    "description": "Introduction to programming and computer science. Emphasizes understanding and implementation of applications using object-oriented techniques. Develops skills such as program design and testing as well as implementation of programs.",
+    "grading_method": ["Regular", "Audit"],
+    "gen_ed": [],
+    "core": [],
+    "relationships": {
+      "coreqs": ["MATH140"],
+      "prereqs": null,
+      "formerly": null,
+      "restrictions": null,
+      "additional_info": "Students who have taken CMSC133 may not take CMSC131.",
+      "also_offered_as": null,
+      "credit_granted_for": "CMSC131, CMSC133, or IMDM127."
+    },
+    "sections": ["CMSC131-0101", "CMSC131-0102", "CMSC131-0103", "CMSC131-0201", "CMSC131-0202"]
+  },
+  {
+    "course_id": "ENGL101",
+    "semester": "202508",
+    "name": "Academic Writing",
+    "dept_id": "ENGL",
+    "department": "English",
+    "credits": "3",
+    "description": "An introduction to principles of effective writing for academic contexts, with attention to thesis development, argumentation, research, and documentation of sources. Emphasizes revision and multiple drafts.",
+    "grading_method": ["Regular"],
+    "gen_ed": ["FSAW"],
+    "core": ["AW"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": null,
+      "formerly": null,
+      "restrictions": "Students who have completed ENGL099 may not enroll in ENGL101.",
+      "additional_info": "Required for all students.",
+      "also_offered_as": null,
+      "credit_granted_for": "ENGL101 or ENGL101S."
+    },
+    "sections": ["ENGL101-0101", "ENGL101-0102", "ENGL101-0103", "ENGL101-0104", "ENGL101-0105", "ENGL101-0106", "ENGL101-0107", "ENGL101-0108"]
+  },
+  {
+    "course_id": "HIST111",
+    "semester": "202508",
+    "name": "Origins of the Modern World",
+    "dept_id": "HIST",
+    "department": "History",
+    "credits": "3",
+    "description": "Major themes, movements, and developments in world history since 1500. Focus on interactions between different world regions and peoples, including cultural exchange, trade, migration, empire-building, and ideological transformation.",
+    "grading_method": ["Regular", "Pass-Fail", "Audit"],
+    "gen_ed": ["DSHS", "DVUP"],
+    "core": ["SH"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": null,
+      "formerly": "HIST110",
+      "restrictions": null,
+      "additional_info": null,
+      "also_offered_as": null,
+      "credit_granted_for": "HIST110 or HIST111."
+    },
+    "sections": ["HIST111-0101", "HIST111-0102", "HIST111-0201"]
+  },
+  {
+    "course_id": "MATH140",
+    "semester": "202508",
+    "name": "Calculus I",
+    "dept_id": "MATH",
+    "department": "Mathematics",
+    "credits": "4",
+    "description": "Introduction to calculus, including functions, limits, continuity, derivatives and applications of the derivative, sketching of graphs of functions, antiderivatives, and definite integrals with applications.",
+    "grading_method": ["Regular", "Audit"],
+    "gen_ed": ["FSMN"],
+    "core": ["MS"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": "Math Placement Exam score of at least 83, or MATH115 with a grade of C- or better, or MATH113 with a grade of C- or better.",
+      "formerly": null,
+      "restrictions": null,
+      "additional_info": "Students with credit for MATH141 may not receive credit for MATH140.",
+      "also_offered_as": null,
+      "credit_granted_for": "MATH140, MATH140H, or MATH141."
+    },
+    "sections": ["MATH140-0101", "MATH140-0102", "MATH140-0103", "MATH140-0201", "MATH140-0301"]
+  },
+  {
+    "course_id": "PSYC100",
+    "semester": "202508",
+    "name": "Introduction to Psychology",
+    "dept_id": "PSYC",
+    "department": "Psychology",
+    "credits": "3",
+    "description": "Survey of the major areas and research methods of psychology, including learning, memory, sensation, perception, cognition, development, personality, psychopathology, social psychology, and physiological psychology.",
+    "grading_method": ["Regular", "Pass-Fail", "Audit"],
+    "gen_ed": ["DSSP"],
+    "core": ["SB"],
+    "relationships": {
+      "coreqs": null,
+      "prereqs": null,
+      "formerly": null,
+      "restrictions": null,
+      "additional_info": "Recommended for all psychology majors.",
+      "also_offered_as": null,
+      "credit_granted_for": null
+    },
+    "sections": ["PSYC100-0101", "PSYC100-0102", "PSYC100-0201", "PSYC100-0202", "PSYC100-0301"]
+  },
+  {
+    "course_id": "BIOL105",
+    "semester": "202508",
+    "name": "Principles of Biology I",
+    "dept_id": "BIOL",
+    "department": "Biology",
+    "credits": "4",
+    "description": "Fundamentals of cell structure and physiology, bioenergetics, molecular biology, genetics, and biotechnology. For students planning careers in the biological sciences, medicine, and related fields.",
+    "grading_method": ["Regular", "Audit"],
+    "gen_ed": ["SCIS"],
+    "core": ["LS"],
+    "relationships": {
+      "coreqs": ["BIOL106"],
+      "prereqs": "CHEM131 and CHEM132 (both may be taken concurrently). Recommended: MATH140 or higher.",
+      "formerly": null,
+      "restrictions": null,
+      "additional_info": "Credit will be granted for only one of BIOL105, BIOL135, or BIOL105H.",
+      "also_offered_as": null,
+      "credit_granted_for": "BIOL105, BIOL105H, or BIOL135."
+    },
+    "sections": ["BIOL105-0101", "BIOL105-0102", "BIOL105-0201"]
+  }
+]
